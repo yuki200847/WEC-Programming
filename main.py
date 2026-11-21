@@ -24,7 +24,7 @@ def read_json(connection, buffer):
             chunk = connection.recv(4096)
             if not chunk:
                 return None, b""
-            buffer = buffer + chunk
+            buffer += chunk
 
 
  # Connect to the server to receive data
