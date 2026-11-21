@@ -82,6 +82,7 @@ def allocate_all_buildings(list_of_buildings, event, grid_price):
             dictionary["solar"]=solar_b4
             dictionary["grid"]=dem- solar_b4 -batt_b4
             dictionary["battery"]=batt_b4
+        energy_list.append(dictionary)
     return energy_list
             
 
