@@ -4,7 +4,6 @@ import socket
 HOST = "localhost"
 PORT = 8800
 
-
 def decide(data):
     # Will Replace this function with the team's energy allocation algorithm.
     buildings = []
@@ -27,15 +26,11 @@ def read_json(connection, buffer):
             buffer += chunk
 
 
-def main():
-    with socket.create_connection((HOST, PORT)) as connection:
-        buffer = b""
-        while True:
-            data, buffer = read_json(connection, buffer)
-            if data is None:
-                break
-            answer = decide(data)
-            connection.sendall((json.dumps(answer) + "\n").encode("utf-8"))
-
-
-main()
+with socket.create_connection((HOST, PORT)) as connection:
+    buffer = b""
+    while True:
+        data, buffer = read_json(connection, buffer)
+        if data is None:
+            break
+        answer = decide(data)
+        connection.sendall((json.dumps(answer) + "\n").encode("utf-8"))
