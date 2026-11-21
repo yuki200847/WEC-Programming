@@ -23,7 +23,7 @@
 #At each hour, your controller will receive updated information about campus electricity demand and any unexpected operating conditions.
 solar_remaining= 200
 battery_remaining=100
-last_hour=False
+
 
 def reset_solar():
     '''Resets the solar energy each hour'''
@@ -37,7 +37,7 @@ def charge_battery(battery_charged):
     battery_remaining+=battery_charged
     return
       
-def allocate_all_buildings(list_of_buildings, event, grid_price):
+def allocate_all_buildings(list_of_buildings, event, grid_price, hour):
     '''use this to regroup buildings to spend all 200 units of solar energy
     list_of_buildings is a list of dictionary {"type":type, "load":demand}
     will return energy_list of dictionary {"solar":energy allocated, "battery": energy allocated, "grid": energy allocated}
@@ -50,9 +50,9 @@ def allocate_all_buildings(list_of_buildings, event, grid_price):
         batt_b4= battery_remaining
         solar_b4= solar_remaining
         if (b_type == "Lecture Hall"):
-            source= battery_or_grid(dem, event, grid_price)
+            source= battery_or_grid(dem, event, grid_price, hour)
         else:
-            source= allocate_energy(dem, event, grid_price)
+            source= allocate_energy(dem, event, grid_price, hour)
         dictionary={} 
         if source==1:
             dictionary["solar"]=dem
@@ -86,7 +86,7 @@ def allocate_all_buildings(list_of_buildings, event, grid_price):
     return energy_list
             
 
-def allocate_energy(demand, event, grid_price):
+def allocate_energy(demand, event, grid_price, hour):
     '''use this if building is not lecture hall
     demand is energy demand and event is the random event
     1 = solar
@@ -98,29 +98,29 @@ def allocate_energy(demand, event, grid_price):
     7= solar(all remaining)+battery(all remaining)+grid '''  
     global solar_remaining, battery_remaining
     if (event=="cloudy_weather") or (solar_remaining==0):
-        return battery_or_grid(demand, event, grid_price)
+        return battery_or_grid(demand, event, grid_price, hour)
     if (solar_remaining <= demand):
         demand-= solar_remaining
         solar_remaining=0
-        return 1+ battery_or_grid(demand, event, grid_price)
+        return 1+ battery_or_grid(demand, event, grid_price, hour)
     else:
         solar_remaining-=demand
         return 1
     
 
-def battery_or_grid(demand, event, grid_price):
+def battery_or_grid(demand, event, grid_price, hour):
     '''use this if building is lecture hall 
     demand is energy demand and event is the random event
     2= grid
     4= battery
     6= battery(all_remaining)+grid'''
-    global battery_remaining, last_hour
+    global battery_remaining
     if (event=="battery_failure"):
         return 2
     elif(event=="grid_failure"):
         battery_remaining-= demand
         return 4 
-    if (last_hour):
+    if (hour==24):
         if (battery_remaining>=demand):
             battery_remaining-=demand
             return 4
