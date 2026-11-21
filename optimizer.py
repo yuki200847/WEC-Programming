@@ -37,24 +37,52 @@ def charge_battery(battery_charged):
     global battery_remaining
     battery_remaining+=battery_charged
     return
-
-def allocate_all_buildings(list_of_demands,i, event):
+      
+def allocate_all_buildings(list_of_buildings, event):
     '''use this to regroup buildings to spend all 200 units of solar energy
-    list_of_demands is a list with the demands of all buildings
-    i is the index of the last lecture hall
-    will return energy_list and the last 2 entries are the solar remaining and battery remaining
+    list_of_buildings is a list of dictionary {"type":type, "load":demand}
+    will return energy_list of dictionary {"solar":energy allocated, "battery": energy allocated, "grid": energy allocated}
      '''
     energy_list=[]
     global solar_remaining, battery_remaining
-    for index in range(len(list_of_demands)):
-        dem= list_of_demands[index]
-        if index<=i:
+    for building in list_of_buildings:
+        dem= building["load"]
+        b_type= building["type"]
+        batt_b4= battery_remaining
+        solar_b4= solar_remaining
+        if (b_type == "Lecture Hall"):
             source= battery_or_grid(dem, event)
         else:
             source= allocate_energy(dem, event)
-        energy_list.append(source)
-    energy_list.append(solar_remaining)
-    energy_list.append(battery_remaining)
+        dictionary={} 
+        if source==1:
+            dictionary["solar"]=dem
+            dictionary["grid"]=0
+            dictionary["battery"]=0
+        elif source==2:
+            dictionary["solar"]=0
+            dictionary["grid"]=dem
+            dictionary["battery"]=0
+        elif source==3:
+            dictionary["solar"]=solar_b4
+            dictionary["grid"]=dem-solar_b4
+            dictionary["battery"]=0
+        elif source==4:
+            dictionary["solar"]=0
+            dictionary["grid"]=0
+            dictionary["battery"]=dem
+        elif source==5:
+            dictionary["solar"]=solar_b4
+            dictionary["grid"]=0
+            dictionary["battery"]=dem-solar_b4
+        elif source==6:
+            dictionary["solar"]=0
+            dictionary["grid"]=dem-batt_b4
+            dictionary["battery"]=batt_b4
+        else:
+            dictionary["solar"]=solar_b4
+            dictionary["grid"]=dem- solar_b4 -batt_b4
+            dictionary["battery"]=batt_b4
     return energy_list
             
 
