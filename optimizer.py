@@ -26,7 +26,7 @@ battery_remaining=100
 grid_price=0.5
 last_hour=False
 
-def allocate_all_buildings(list_of_demands,event,i):
+def allocate_all_buildings(list_of_demands,i, event):
     '''use this to regroup buildings to spend all 200 units of solar energy
     list_of_demands is a list with the demands of all buildings
     i is the index of the last lecture hall
@@ -36,7 +36,7 @@ def allocate_all_buildings(list_of_demands,event,i):
     global solar_remaining, battery_remaining
     for index in range(len(list_of_demands)):
         dem= list_of_demands[index]
-        if index<i:
+        if index<=i:
             source= battery_or_grid(dem, event)
         else:
             source= allocate_energy(dem, event)
@@ -59,7 +59,7 @@ def allocate_energy(demand, event):
     global solar_remaining, battery_remaining
     if (event==cloudy_weather) or (solar_remaining==0):
         return battery_or_grid(demand, event)
-    if (solar_remaining=<demand):
+    if (solar_remaining =< demand):
         demand-= solar_remaining
         solar_remaining=0
         return 1+ battery_or_grid(demand, event)
