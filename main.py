@@ -1,7 +1,7 @@
 import json
 import socket
-import optimizer
-import storage_policy
+import allocation
+import battery
 
 hour = 1
 HOST = "localhost"
