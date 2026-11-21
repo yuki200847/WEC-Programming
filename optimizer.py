@@ -59,7 +59,7 @@ def allocate_energy(demand, event):
     global solar_remaining, battery_remaining
     if (event==cloudy_weather) or (solar_remaining==0):
         return battery_or_grid(demand, event)
-    if (solar_remaining<demand):
+    if (solar_remaining=<demand):
         demand-= solar_remaining
         solar_remaining=0
         return 1+ battery_or_grid(demand, event)
@@ -78,7 +78,7 @@ def battery_or_grid(demand, event):
     if (event==battery_failure):
         return 2
     elif(event==grid_failure):
-        return 4
+        return 4 #make sure there is always enough battery for this...
     if (last_hour):
         if (battery_remaining>=demand):
             battery_remaining-=demand
@@ -88,7 +88,7 @@ def battery_or_grid(demand, event):
         return 6
     elif(grid_price<1):
         return 2
-    elif (battery_remaining>demand):
+    elif (battery_remaining>=demand):
         battery_remaining-=demand
         return 4
     else:
