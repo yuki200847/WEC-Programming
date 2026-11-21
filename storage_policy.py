@@ -27,5 +27,15 @@ def battery_charging_decision_using_grid( grid_price ):
     charge_decision_due_grid = False
     if
 
+def battery_charging_decision_using_hours( hour_counting ):
+    charge_decision_due_grid = True
+    if hour_counting == 23: charge_decision_due_grid = False
+    return charge_decision_due_grid
 
+def battery_charging_decision_using_remaining( battery_remaining):
+    charge_decision_due_grid = False
+    if
+
+
+# fully charging ?
 # idea: connect all charge_decision with and, -> all true -> charge
