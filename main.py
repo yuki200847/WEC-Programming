@@ -9,19 +9,19 @@ PORT = 8800
 
 def decide(data):
     global hour
-    optimizer.reset_solar()
-    optimizer.last_hour = (hour == 24)
+    allocation.reset_solar()
+    allocation.last_hour = (hour == 24)
 
-    buildings = optimizer.allocate_all_buildings(
+    buildings = allocation.allocate_all_buildings(
         data["loads"], data["random_event"], data["grid_price"]
     )
     battery_target = 100
     generator = 0
-    if (data["random_event"] != "battery_failure" and storage_policy.battery_charging_decision_using_prediction(data["forecast"]) and storage_policy.battery_charging_decision_using_hours(hour) and storage_policy.battery_charging_decision_using_grid(data["grid_price"]) and storage_policy.battery_charging_decision_using_remaining( optimizer.battery_remaining, battery_target)):
-        generator = storage_policy.charging_battery_to_a_certain_value(
-            battery_target, optimizer.battery_remaining, data["random_event"]
+    if (data["random_event"] != "battery_failure" and battery.battery_charging_decision_using_prediction(data["forecast"]) and battery.battery_charging_decision_using_hours(hour) and battery.battery_charging_decision_using_grid(data["grid_price"]) and battery.battery_charging_decision_using_remaining( allocation.battery_remaining, battery_target)):
+        generator = battery.charging_battery_to_a_certain_value(
+            battery_target, allocation.battery_remaining, data["random_event"]
         )
-    optimizer.charge_battery(generator)
+    allocation.charge_battery(generator)
     hour += 1
     return {"buildings": buildings, "generator": generator}
 

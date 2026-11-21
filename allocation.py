@@ -50,7 +50,7 @@ def allocate_all_buildings(list_of_buildings, event, grid_price):
         b_type= building["type"]
         batt_b4= battery_remaining
         solar_b4= solar_remaining
-        if (b_type == "Lecture Hall"):
+        if (b_type == "lecture_hall"):
             source= battery_or_grid(dem, event, grid_price)
         else:
             source= allocate_energy(dem, event, grid_price)
