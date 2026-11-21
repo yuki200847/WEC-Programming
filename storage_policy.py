@@ -28,6 +28,6 @@ def battery_charging_decision_using_remaining( battery_remaining):
 
 def charging_battery_to_a_certain_value( battery_charge_target, battery_remaining ):
     if ( battery_remaining < battery_charge_target and condition != "generator_failure" ):
-        generator_use = 100 - battery_remaining
-        battery_remaining = 100
+        generator_use = battery_charge_target - battery_remaining
+        battery_remaining = battery_charge_target
 
