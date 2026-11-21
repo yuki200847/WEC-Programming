@@ -9,7 +9,7 @@ def battery_charging_decision_using_prediction( weather_prediction ):
 
 def battery_charging_decision_using_hours( hour_counting ):
     charge_decision_due_to_hours = True
-    if hour_counting == 23 or hour_counting == 24: charge_decision_due_grid = False
+    if hour_counting == 23 or hour_counting == 24: charge_decision_due_to_hours = False
     return charge_decision_due_to_hours
 # consider night -> lower energy demand?
 # bool last_hour && last_two_hour?? -> not to charge the battery
@@ -29,7 +29,7 @@ def battery_charging_decision_using_grid( grid_price ):
 
 def battery_charging_decision_using_remaining( battery_remaining, battery_charge_target ):
     charge_decision_due_to_remaining = False
-    if battery_remaining < battery_charge_target: charge_decision_due_grid = True
+    if battery_remaining < battery_charge_target: charge_decision_due_to_remaining = True
     return charge_decision_due_to_remaining
 
 # idea: connect all charge_decision with and, -> all true -> charge
