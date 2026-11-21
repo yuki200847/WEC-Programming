@@ -26,7 +26,7 @@ battery_remaining=100
 grid_price=0.5
 last_hour=False
 
-def regroup_buildings(list_of_demands,event,i):
+def allocate_all_buildings(list_of_demands,event,i):
     '''use this to regroup buildings to spend all 200 units of solar energy
     list_of_demands is a list with the demands of all buildings
     i is the index of the last lecture hall
@@ -37,14 +37,10 @@ def regroup_buildings(list_of_demands,event,i):
     for index in range(len(list_of_demands)):
         dem= list_of_demands[index]
         if index<i:
-            source= battery_or_grid(dem, event, last_hour)
+            source= battery_or_grid(dem, event)
         else:
             source= allocate_energy(dem, event)
         energy_list.append(source)
-        if source==0:
-            solar_remaining-=dem
-        elif source==2:
-            battery_remaining-=dem
     energy_list.append(solar_remaining)
     energy_list.append(battery_remaining)
     return energy_list
@@ -66,7 +62,10 @@ def allocate_energy(demand, event):
     if (solar_remaining<demand):
         demand-= solar_remaining
         solar_remaining=0
-        return 1+ battery_or_grid(demand, battery_remaining)
+        return 1+ battery_or_grid(demand, event)
+    else:
+        solar_remaining-=demand
+        return 1
     
 
 def battery_or_grid(demand, event):
@@ -81,11 +80,11 @@ def battery_or_grid(demand, event):
     elif(event==grid_failure):
         return 4
     if (last_hour):
-        if (battery_unit>=demand):
+        if (battery_remaining>=demand):
             battery_remaining-=demand
             return 4
-        battery_remaining=0
         demand-=battery_remaining
+        battery_remaining=0
         return 6
     elif(grid_price<1):
         return 2
@@ -93,6 +92,6 @@ def battery_or_grid(demand, event):
         battery_remaining-=demand
         return 4
     else:
-        battery_remaining=0
         demand-=battery_remaining
+        battery_remaining=0
         return 6
