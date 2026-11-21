@@ -40,5 +40,5 @@ with socket.create_connection((HOST, PORT)) as connection:
         # Pass the current data to allocation algo
         answer = decide(data)
         # Since the socket is in bytes, need to convert python dic into bytes before sending back to the server
-    message = json.dumps(answer) + "\n" # py dictionary to string
-    connection.sendall (message.encode("utf-8")) # string to bytes
+        message = json.dumps(answer) + "\n" # py dictionary to string
+        connection.sendall (message.encode("utf-8")) # string to bytes
