@@ -1,6 +1,6 @@
 # WEC-Programming
 **Step 1:**
--//Receive input from Server
+-Receive input from Server
 /Grid price
 /Weather forcast and random event
 
