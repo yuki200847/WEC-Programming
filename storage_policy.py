@@ -1,10 +1,4 @@
 # generator $1.00/unit
-
-def fully_charge_battery( battery_remaining ):
-    if (battery_remaining < 100 and condition != "generator_failure"): 
-        generator_use = 100 - battery_remaining
-        battery_remaining = 100
-
 # int hour, every hour ++
 
 def battery_charging_decision_using_prediction( weather_prediction ):
@@ -26,8 +20,14 @@ def battery_charging_decision_using_hours( hour_counting ):
 
 def battery_charging_decision_using_remaining( battery_remaining):
     charge_decision_due_grid = False
-    if
+    if 
 
 
 # fully charging ?
 # idea: connect all charge_decision with and, -> all true -> charge
+
+def charging_battery_to_a_certain_value( battery_charge_target, battery_remaining ):
+    if ( battery_remaining < battery_charge_target and condition != "generator_failure" ):
+        generator_use = battery_charge_target - battery_remaining
+        battery_remaining = battery_charge_target
+
