@@ -18,7 +18,7 @@ def battery_charging_decision_using_grid( grid_price ):
     charge_decision_due_to_grid = False
     if grid_price <= 2: 
         charge_decision_due_to_grid = True
-        battery_charge_to_target = 100
+        # battery_charge_to_target = 100
     return charge_decision_due_to_grid
 
 # the only function to decide charging target?
