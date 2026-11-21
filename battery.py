@@ -14,9 +14,9 @@ def battery_charging_decision_using_hours( hour_counting ):
 # consider night -> lower energy demand?
 # bool last_hour && last_two_hour?? -> not to charge the battery
 
-def battery_charging_decision_using_grid( grid_price ):
+def battery_charging_decision_using_grid( grid_price, condition ):
     charge_decision_due_to_grid = False
-    if grid_price <= 2: 
+    if grid_price <= 2 or condition == "grid_failure": 
         charge_decision_due_to_grid = True
         # battery_charge_to_target = 100
     return charge_decision_due_to_grid
