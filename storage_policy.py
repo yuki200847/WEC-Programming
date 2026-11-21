@@ -19,6 +19,7 @@ def battery_charging_decision_using_grid( grid_price ):
     if grid_price <= 2: 
         charge_decision_due_to_grid = True
         battery_charge_to_target = 100
+    return charge_decision_due_to_grid
 
 # the only function to decide charging target?
 # get a number + test, if < ? , charge the battery
@@ -37,4 +38,5 @@ def charging_battery_to_a_certain_value( battery_charge_target, battery_remainin
     if ( condition != "generator_failure" ):
         generator_use = battery_charge_target - battery_remaining
         battery_remaining = battery_charge_target
+    return generator_use
 
