@@ -4,7 +4,7 @@
 def battery_charging_decision_using_prediction( weather_prediction ):
     charge_decision_due_to_prediction = False
     if weather_prediction == "cloudy": charge_decision = True
-    return charge_decision
+    return charge_decision_due_to_prediction
 # consider 75% accuracy
 
 def battery_charging_decision_using_hours( hour_counting ):
