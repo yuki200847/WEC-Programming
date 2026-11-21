@@ -28,13 +28,24 @@ last_hour=False
 
 def allocate_energy(demand, event):
     '''use this if building is not lecture hall
-    demand is energy demand and event is the random event'''
-    return
+    or at night
+    demand is energy demand and event is the random event
+    0 = solar
+    1= grid
+    2= battery'''
+    if (event!=cloudy_weather):
+        return battery_or_grid(demand, event)
+    return 0
 def battery_or_grid(demand, event):
-    '''use this if building is lecture hall
+    '''use this if building is lecture hall 
+    or at night
     demand is energy demand and event is the random event
     1 represents grid 
     2 represents battery'''
+    if (event==battery_failure):
+        return 1
+    elif(event==grid_failure):
+        return 2
     if (last_hour):
         if (battery_unit<demand):
             return 2
