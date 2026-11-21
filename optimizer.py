@@ -26,6 +26,18 @@ battery_remaining=100
 grid_price=0.5
 last_hour=False
 
+def reset_solar():
+    '''Resets the solar energy each hour'''
+    global solar_remaining
+    solar_remaining=200
+    return 
+
+def charge_battery(battery_charged):
+    '''adds the charged battery to the battery each hour'''
+    global battery_remaining
+    battery_remaining+=battery_charged
+    return
+
 def allocate_all_buildings(list_of_demands,i, event):
     '''use this to regroup buildings to spend all 200 units of solar energy
     list_of_demands is a list with the demands of all buildings
@@ -57,9 +69,9 @@ def allocate_energy(demand, event):
     6= battery(all_remaining)+grid
     7= solar(all remaining)+battery(all remaining)+grid '''  
     global solar_remaining, battery_remaining
-    if (event==cloudy_weather) or (solar_remaining==0):
+    if (event=="cloudy_weather") or (solar_remaining==0):
         return battery_or_grid(demand, event)
-    if (solar_remaining =< demand):
+    if (solar_remaining <= demand):
         demand-= solar_remaining
         solar_remaining=0
         return 1+ battery_or_grid(demand, event)
@@ -75,10 +87,11 @@ def battery_or_grid(demand, event):
     4= battery
     6= battery(all_remaining)+grid'''
     global battery_remaining, last_hour, grid_price
-    if (event==battery_failure):
+    if (event=="battery_failure"):
         return 2
-    elif(event==grid_failure):
-        return 4 #make sure there is always enough battery for this...
+    elif(event=="grid_failure"):
+        battery_remaining-= demand
+        return 4 
     if (last_hour):
         if (battery_remaining>=demand):
             battery_remaining-=demand
