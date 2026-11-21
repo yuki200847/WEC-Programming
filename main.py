@@ -17,7 +17,7 @@ def decide(data):
     )
     battery_target = 100
     generator = 0
-    if (data["random_event"] != "battery_failure" and battery.battery_charging_decision_using_prediction(data["forecast"]) and battery.battery_charging_decision_using_hours(hour) and battery.battery_charging_decision_using_grid(data["grid_price"]) and battery.battery_charging_decision_using_remaining( allocation.battery_remaining, battery_target)):
+    if (data["random_event"] != "battery_failure" and battery.battery_charging_decision_using_prediction(data["forecast"]) and battery.battery_charging_decision_using_hours(hour) and battery.battery_charging_decision_using_grid(data["grid_price"],data["random_event"]) and battery.battery_charging_decision_using_remaining( allocation.battery_remaining, battery_target)):
         generator = battery.charging_battery_to_a_certain_value(
             battery_target, allocation.battery_remaining, data["random_event"]
         )
