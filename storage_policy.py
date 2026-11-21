@@ -35,6 +35,7 @@ def battery_charging_decision_using_remaining( battery_remaining, battery_charge
 # idea: connect all charge_decision with and, -> all true -> charge
 
 def charging_battery_to_a_certain_value( battery_charge_target, battery_remaining, condition ):
+    generator_use = 0
     if ( condition != "generator_failure" ):
         generator_use = battery_charge_target - battery_remaining
         battery_remaining = battery_charge_target
