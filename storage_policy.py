@@ -20,7 +20,7 @@ def battery_charging_decision_using_remaining( battery_remaining, battery_charge
 
 def battery_charging_decision_using_grid( grid_price ):
     charge_decision_due_grid = False
-    if grid_price < 1: 
+    if grid_price <= 2: 
         charge_decision_due_grid = True
         battery_charge_target = 100
 
