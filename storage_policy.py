@@ -21,3 +21,4 @@ def charge_battery( int battery_remaining ){
 }
 
 # bool last_hour && last_two_hour?? -> not to charge the battery
+# int hour, every hour ++
